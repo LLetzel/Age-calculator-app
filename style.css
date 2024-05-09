@@ -1,101 +1,88 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f2f2f2;
-    padding: 20px;
-  }
+.poetsen-one-regular {
   
-  .container {
-    background-color: #fff;
-    border-radius: 5px;
-    padding: 20px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  h1 {
-    text-align: center;
-    margin-bottom: 30px;
-  }
-  
-  form {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
-  }
-  
-  label {
-    font-weight: bold;
-    margin-bottom: 5px;
-  }
-  
-  input[type="text"] {
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    margin-bottom: 10px;
-  }
-  
-  button[type="submit"] {
-    background-color: #4CAF50;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-bottom: 10px;
-  }
-  
-  button[type="submit"]:hover {
-    background-color: #3e8e41;
-  }
-  
-  strong {
-    font-weight: bold;
-    font-size: 1.2em;
-  }
-/* body {
-    font-family: Arial, sans-serif;
-    background-color: #f2f2f2;
-    padding: 20px;
+  font-weight: 400;
+  font-style: normal;
 }
 
-.container {
-    width: 300px;
-    margin: 0 auto;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+body {
+  font-family: "Poetsen One", sans-serif;
+  background-color: #f2f2f2;
+  /* min-height: 100vh; */
+  /* padding: 20px; */
+}
+
+.container-titulo{
+  display: flex;
+  justify-content: center;
+}
+
+.container-form{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.box {
+  display: flex;
+
 }
 
 h1 {
-    text-align: center;
-    margin-bottom: 20px;
+  /* position: absolute; */
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 30px;
 }
 
 form {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  height: 70vh;
+  width: 45vw;
+  align-items: center;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  border: 6px solid #333; /* Added border */
+}
+
+.dia, .mes, .ano {
+  margin: 5%;
 }
 
 label {
-    margin-bottom: 5px;
+  font-size: 1.0rem;
+  color: #333;
+  margin-bottom: 10px;
 }
 
-input,
-button {
-    padding: 5px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+input[type="number"] {
+  width: 100%;
+  padding: 10px;
+  font-size: 1.2rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
 }
 
-button {
-    background-color: #007bff;
-    color: #fff;
-    cursor: pointer;
+button[type="submit"] {
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  background-color: #864ff7;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #3e8e41;
 }
 
 #result {
-    margin-top: 20px;
-    text-align: center;
-} */
+  font-size: 4rem;
+  color: #333;
+  margin-top: 20px;
+}

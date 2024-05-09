@@ -1,103 +1,96 @@
-// function calcularIdade(dataNascimento) {
-//     // 1. Obter data de nascimento do usuário
-//     const anoNascimento = parseInt(dataNascimento.ano);
-//     const mesNascimento = parseInt(dataNascimento.mes) - 1; // Ajustar o mês para 0 (baseado em zero)
-//     const diaNascimento = parseInt(dataNascimento.dia);
-  
-//     // 2. Obter data atual
-//     const dataAtual = new Date();
-//     const anoAtual = dataAtual.getFullYear();
-//     const mesAtual = dataAtual.getMonth();
-//     const diaAtual = dataAtual.getDate();
-  
-//     // 3. Calcular diferença de tempo em milisegundos
-//     const diferencaMilisegundos = Date.UTC(anoAtual, mesAtual, diaAtual) -
-//                                Date.UTC(anoNascimento, mesNascimento, diaNascimento);
-  
-//     // 4. Converter diferença de tempo em anos
-//     const diferencaSegundos = diferencaMilisegundos / 1000;
-//     const diferencaMinutos = diferencaSegundos / 60;
-//     const diferencaHoras = diferencaMinutos / 60;
-//     const diferencaDias = diferencaHoras / 24;
-//     let anos = Math.floor(diferencaDias / 365);
-  
-//     // 5. Ajustar para anos bissextos (a cada 4 anos, exceto em anos múltiplos de 100 que não são múltiplos de 400)
-//     if ((anoNascimento % 4 === 0) && (anoNascimento % 100 !== 0) || (anoNascimento % 400 === 0)) {
-//       if (mesNascimento === 1 && diaNascimento > 28) {
-//         anos++;
-//       } else if (mesNascimento === 2 && diaNascimento > 29) {
-//         anos++;
-//       }
-//     }
-  
-//     // Apresentar o resultado
-//     return anos;
+// Seleciona os elementos do formulário
+const form = document.querySelector('form');
+const diaInput = document.querySelector('#day');
+const mesInput = document.querySelector('#month');
+const anoInput = document.querySelector('#year');
+const resultadoDiv = document.querySelector('#result');
+
+// Adiciona um evento de submit ao formulário
+form.addEventListener('submit', (evento) => {
+  // Previne o comportamento padrão do formulário
+  evento.preventDefault();
+
+  // Obtém os valores dos inputs
+  const diaNascimento = parseInt(diaInput.value);
+  const mesNascimento = parseInt(mesInput.value);
+  const anoNascimento = parseInt(anoInput.value);
+
+  // Verifica se os valores são válidos
+  if (diaNascimento > 0 && diaNascimento <= 31 && mesNascimento > 0 && mesNascimento <= 12 && anoNascimento >= 1900 && anoNascimento <= 2024) {
+    // Cria uma data com a data de nascimento
+    const dataNascimento = new Date(anoNascimento, mesNascimento - 1, diaNascimento);
+
+    // Obtém a data atual
+    const dataAtual = new Date();
+
+    // Calcula a diferença em milissegundos entre as duas datas
+    const diferencaEmMilissegundos = dataAtual - dataNascimento;
+
+    // Calcula a idade em anos, meses e dias
+    const idadeEmAnos = Math.floor(diferencaEmMilissegundos / (1000 * 60 * 60 * 24 * 365));
+    const idadeEmMeses = Math.floor((diferencaEmMilissegundos % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24 * 30));
+    const idadeEmDias = Math.floor(((diferencaEmMilissegundos % (1000 * 60 * 60 * 24 * 365)) % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24));
+
+    // Exibe o resultado na div de resultado
+    resultadoDiv.textContent = `${idadeEmAnos} anos ${idadeEmMeses} meses e ${idadeEmDias} dias`;
+  } else {
+    // Exibe uma mensagem de erro se os valores não forem válidos
+    alert('Por favor, insira uma data válida.');
+  }
+});
+
+// Seleciona o elemento form do documento HTML
+// const form = document.querySelector('form');
+
+// // Seleciona o elemento div do resultado do HTML
+// const resultDiv = document.querySelector('#result');
+
+// // Adiciona um ouvinte de eventos ao evento de submissão do formulário
+// form.addEventListener('submit', (e) => {
+//   // Impede o comportamento de submissão de formulário padrão
+//   e.preventDefault();
+
+//   // Obtém os valores dos campos de entrada de dia, mês e ano
+//   const day = parseInt(document.querySelector('#day').value);
+//   const month = parseInt(document.querySelector('#month').value);
+//   const year = parseInt(document.querySelector('#year').value);
+
+//   // Cria um novo objeto Date para a data atual
+//   const today = new Date();
+
+//   // Cria um novo objeto Date para a data de nascimento
+//   const birthDate = new Date(year, month - 1, day);
+
+//   // Chama a função calculateAge com as datas de nascimento e atual
+//   const age = calculateAge(birthDate, today);
+
+//   // Exibe o resultado no elemento div do resultado
+//   resultDiv.textContent = `Sua idade é: ${age.years} anos, ${age.months} meses e ${age.days} dias`;
+// });
+
+// // Função para calcular a idade com base nas datas de nascimento e atual
+// function calculateAge(birthDate, today) {
+//   let years = today.getFullYear() - birthDate.getFullYear();
+//   let months = today.getMonth() - birthDate.getMonth();
+//   let days = today.getDate() - birthDate.getDate();
+
+//   // Se o mês de nascimento for maior que o mês atual, subtrai 1 do ano
+//   if (months < 0) {
+//     years--;
+//     months += 12;
 //   }
 
-//------------------------------------------------------------------------------------------------------
+//   // Se o dia de nascimento for maior que o dia atual, subtrai 1 do mês
+//   if (days < 0) {
+//     months--;
+//     days += getDaysInMonth(birthDate.getMonth() + 1, birthDate.getFullYear());
+//   }
 
-// Função para validar e formatar a data de nascimento
-function formatarData(data) {
-  const partes = data.split('/');
-  if (partes.length !== 3) {
-    return null;
-  }
-  const dia = parseInt(partes[0], 10);
-  const mes = parseInt(partes[1], 10) - 1; // Mês começa em 0
-  const ano = parseInt(partes[2], 10);
-  if (isNaN(dia) || isNaN(mes) || isNaN(ano) || dia < 1 || dia > 31 || mes < 0 || mes > 11) {
-    return null;
-  }
-  return new Date(ano, mes, dia);
-}
+//   // Retorna a idade como um objeto com as propriedades anos, meses e dias
+//   return { years, months, days };
+// }
 
-// Função para calcular a idade a partir da data de nascimento
-function calcularIdade(dataNascimento) {
-  // Obter data atual
-  const dataAtual = new Date();
-  const anoAtual = dataAtual.getFullYear();
-  const mesAtual = dataAtual.getMonth();
-  const diaAtual = dataAtual.getDate();
-
-  // Obter idade em dias
-  const diferencaMilisegundos = Date.UTC(anoAtual, mesAtual, diaAtual) - Date.UTC(dataNascimento.ano, dataNascimento.mes - 1, dataNascimento.dia);
-  const diferencaDias = Math.floor(diferencaMilisegundos / (1000 * 60 * 60 * 24));
-
-  // Calcular idade em anos
-  let anos = Math.floor(diferencaDias / 365);
-
-  // Ajustar para anos bissextos
-  if ((dataNascimento.ano % 4 === 0) && (dataNascimento.ano % 100 !== 0) || (dataNascimento.ano % 400 === 0)) {
-    if (dataNascimento.mes === 1 && dataNascimento.dia > 28) {
-      anos++;
-    } else if (dataNascimento.mes === 2 && dataNascimento.dia > 29) {
-      anos++;
-    }
-  }
-
-  // Retornar idade
-  return anos;
-}
-
-// Obter referência para os elementos HTML
-const form = document.getElementById('form');
-const dataNascimentoInput = document.getElementById('data-nascimento');
-const idadeOutput = document.getElementById('idade');
-
-// Adicionar evento de envio de formulário
-form.addEventListener('submit', function(event) {
-  event.preventDefault();
-
-  // Obter data de nascimento do usuário
-  const dataNascimento = {
-    ano: parseInt(dataNascimentoInput.value.substring(0, 4)),
-    mes: parseInt(dataNascimentoInput.value.substring(5, 7)),
-    dia: parseInt(dataNascimentoInput.value.substring(8, 10))
-  };
-
-  // Calcular idade
-  const idade = calcularIdade(dataNascimento);
-
-  // Exibir idade
-  idadeOutput.textContent = idade;
-});
+// // Função para obter o número de dias no mês especificado
+// function getDaysInMonth(month, year) {
+//   return new Date(year, month, 0).getDate();
+// }
